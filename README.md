@@ -18,6 +18,7 @@ VueBase is a Boilerplate for vuejs, a quick way to create administrative systems
 * Authentication using Vuex
 * Http with axios
 * VueRouter for route manage
+* Typeahead on users form
 
 login: _admin_, password: _admin_
 

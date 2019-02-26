@@ -1,5 +1,6 @@
 /* Model*/
 const Model = require('./model');
+const Acl = require('./UserAcl');
 const bcrypt = require('bcrypt-nodejs');
 const to = require('../../core/to');
 
@@ -33,6 +34,12 @@ exports.new = async (req, res) => {
   const [err, data] = await to(model.save());
 
   if (!err && data) {
+    //criar acl do usuario
+    const acl = new Acl();
+    acl.user = data._id;
+
+    await acl.save();
+
     res.json({ success: true, data, err, form: req.body });
   } else {
     if(err.code == 11000) {
