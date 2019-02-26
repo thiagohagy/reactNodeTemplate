@@ -46,6 +46,11 @@
                 <td>{{item.role}}</td>
                 <td>
                   <b-button variant="outline-secondary btn-sm">
+                    <router-link :to="{name: 'UsersAcl', params: {id: item._id }}">
+                      ACL
+                    </router-link>
+                  </b-button>
+                  <b-button variant="outline-secondary btn-sm">
                     <router-link :to="{name: 'UsersForm', params: {id: item._id }}">
                       Edit
                     </router-link>

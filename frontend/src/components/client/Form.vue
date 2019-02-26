@@ -30,7 +30,6 @@
 
 <script>
 
-
   export default {
     props:['id'],
     data() {
@@ -48,13 +47,13 @@
             let response = await this.$http.put('v1/clients', this.form); // request with async await
 
             if (response.success) {
-              this.$toasted.show('Client edited with success',{icon:'check', type: 'success'});
+              this.$toasted.show('Cliente editado com sucesso',{icon:'check', type: 'success'});
               this.$router.push({name: "Clients"});
             } else {
               this.$toasted.show(response.err ,{icon:'times', type: 'error'});
             }
           } else {
-            this.$toasted.show('Inform client name',{icon:'times', type: 'error'})
+            this.$toasted.show('Informe o nome do cliente',{icon:'times', type: 'error'})
           }
         } else {
 
@@ -62,26 +61,26 @@
             let response = await this.$http.post('v1/clients', this.form); // request with async await
 
             if (response.success) {
-              this.$toasted.show('Registrarion completed with success',{icon:'check', type: 'success'});
+              this.$toasted.show('Cadastro concluido com sucesso',{icon:'check', type: 'success'});
               this.$router.push({name: "Clients"});
             } else {
               this.$toasted.show(response.err ,{icon:'times', type: 'error'});
             }
           } else {
-            this.$toasted.show('Inform client name',{icon:'times', type: 'error'})
+            this.$toasted.show('Informe o nome do cliente', {icon:'times', type: 'error'})
           }
         }
       },
     },
     async mounted() {
       if (this.id) {
-        this.pageTitle =  'User edit';
+        this.pageTitle =  'Edição de cliente';
         let response = await this.$http.get(`/v1/clients/${this.id}`);
         if (response._id) {
           delete response.password;
           this.form = this.form = response;
         } else {
-          this.$toasted.show('An error has ocurred' ,{icon:'times', type: 'error'});
+          this.$toasted.show(response.err ,{icon:'times', type: 'error'});
         }
       }
     },

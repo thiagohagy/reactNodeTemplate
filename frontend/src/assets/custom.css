@@ -42,3 +42,7 @@
 .btn-outline-secondary a {
   color: #343a40
 }
+
+.no-padding {
+  padding: 0px;
+}

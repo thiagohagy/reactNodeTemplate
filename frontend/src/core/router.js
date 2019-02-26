@@ -31,6 +31,12 @@ const UsersForm = (resolve) => {
   });
 };
 
+const UsersAcl = (resolve) => {
+  require.ensure(['./../components/users/Acl.vue'], () => {
+    resolve(require('././../components/users/Acl.vue'));
+  });
+};
+
 // CLIENTS
 const Clients = (resolve) => {
   require.ensure(['./../components/client/Home.vue'], () => {
@@ -59,8 +65,8 @@ const router = new Router({
       name: 'Home',
       component: Home,
       meta: {
-        humanName: 'Home',
-        pathAlias: 'Home',
+        humanName: 'Início',
+        pathAlias: 'Início',
         showOnNav: true,
       },
     },
@@ -70,7 +76,7 @@ const router = new Router({
       component: Login,
       meta: {
         humanName: 'Login',
-        pathAlias: 'Users / Login',
+        pathAlias: 'Usuários / Login',
       },
     },
     {
@@ -79,7 +85,7 @@ const router = new Router({
         render(c) { return c('router-view') } /// then I dont need a parent component file
       },
       meta: {
-        humanName: 'Users',
+        humanName: 'Usuários',
         showOnNav: true,
       },
       children: [
@@ -88,8 +94,8 @@ const router = new Router({
           name: 'Users',
           component: Users,
           meta: {
-            humanName: 'List',
-            pathAlias: 'Users / List',
+            humanName: 'Lista',
+            pathAlias: 'Usuários / Lista',
             showOnNav: true,
           },
         },
@@ -99,9 +105,20 @@ const router = new Router({
           name: 'UsersForm',
           component: UsersForm,
           meta: {
-            humanName: 'Form',
-            pathAlias: 'Users / Form',
+            humanName: 'Formulário',
+            pathAlias: 'Usuários / Formulário',
             showOnNav: true,
+          },
+        },
+        {
+          path: 'acl/:id?',
+          props: true, // pass paramas as props, then you dont need to use $watch
+          name: 'UsersAcl',
+          component: UsersAcl,
+          meta: {
+            humanName: 'Lista de acessso',
+            pathAlias: 'Usuários / Lista de acessso',
+            showOnNav: false,
           },
         },
       ],
@@ -112,7 +129,7 @@ const router = new Router({
         render(c) { return c('router-view') } /// then I dont need a parent component file
       },
       meta: {
-        humanName: 'Clients',
+        humanName: 'Clientes',
         showOnNav: true,
       },
       children: [
@@ -121,8 +138,8 @@ const router = new Router({
           name: 'Clients',
           component: Clients,
           meta: {
-            humanName: 'List',
-            pathAlias: 'Clients / List',
+            humanName: 'Lista',
+            pathAlias: 'Clientes / Lista',
             showOnNav: true,
           },
         },
@@ -132,8 +149,8 @@ const router = new Router({
           name: 'ClientsForm',
           component: ClientsForm,
           meta: {
-            humanName: 'Form',
-            pathAlias: 'Clients / Form',
+            humanName: 'Formulário',
+            pathAlias: 'Clientes / Form',
             showOnNav: true,
           },
         },

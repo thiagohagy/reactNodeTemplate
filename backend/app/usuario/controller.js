@@ -1,6 +1,7 @@
 /* Model*/
 const Model = require('./model');
 const Acl = require('./UserAcl');
+const SystemModules = require('./../systemModules/Model');
 const bcrypt = require('bcrypt-nodejs');
 const to = require('../../core/to');
 
@@ -26,6 +27,18 @@ exports.index = async (req, res) => {
 exports.get = async (req, res) => {
   const data = await Model.findOne({ _id: req.params.id });
   res.json(data);
+};
+
+exports.getAcl = async (req, res) => {
+  const data = await Acl.findOne({ user: req.params.id }).populate('user');
+  const systemModules = await SystemModules.find();
+
+  const ret = {
+    acl: data,
+    systemModules: systemModules,
+  };
+
+  res.json(ret);
 };
 
 exports.new = async (req, res) => {
@@ -87,3 +100,18 @@ exports.edit = async (req, res) => {
     res.json({ success: false, data, err, form: req.body });
   }
 };
+
+exports.updateAcl = async (req, res) => {
+  const model = await Acl.findOne({ _id: req.body._id });
+
+  model.modules = req.body.modules;
+  const [err, data] = await to(model.save());
+
+  if (!err && data) {
+    res.json({ success: true, data, err, form: req.body });
+  } else {
+    res.json({ success: false, data, err, form: req.body });
+  }
+};
+
+

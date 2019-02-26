@@ -6,7 +6,14 @@ const Schema = mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'Usuario'
   },
+  modules: [
+    {
+        module: String,
+        name: String,
+        level: String,
+    },
+],
 });
 
 
-module.exports = mongoose.model('Usuario', Schema);
+module.exports = mongoose.model('ACL', Schema);
