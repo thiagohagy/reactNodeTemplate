@@ -4,11 +4,21 @@ const Acl = require('./UserAcl');
 const SystemModules = require('./../systemModules/Model');
 const bcrypt = require('bcrypt-nodejs');
 const to = require('../../core/to');
+// const aclValidator = require('./../../core/aclValidator');
 
 /* Routes*/
 exports.index = async (req, res) => {
 
   const filtro = {};
+
+  // let access = await aclValidator.verify(req.decoded.aclModules, 'users');
+
+  // if (access == 2) {
+  //   filtro.client = req.decoded.client;
+  // } else if (access == 3 || !access) {
+  //   filtro._id = req.decoded._id;
+  // }
+
   if(req.body.busca) filtro.login= { $regex: req.body.busca };
   filtro.active = true;
 
@@ -42,38 +52,55 @@ exports.getAcl = async (req, res) => {
 };
 
 exports.new = async (req, res) => {
+  // let access = await aclValidator.verify(req.decoded.aclModules, 'users');
   req.body.createdBy = req.decoded._id;
   var model = new Model(req.body);
-  const [err, data] = await to(model.save());
 
-  if (!err && data) {
-    //criar acl do usuario
-    const acl = new Acl();
-    acl.user = data._id;
+  // if (access > 2) {
+  //   res.json({ succsess: false, data, err: 'OPS!!! Você nao pode cadastrar usuários', form: req.body });
+  // } else {
+  //   if (access > 1) {
+  //     model.client = req.decoded._id;
+  //   }
+    const [err, data] = await to(model.save());
 
-    await acl.save();
+    if (!err && data) {
+      //criar acl do usuario
+      const acl = new Acl();
+      acl.user = data._id;
 
-    res.json({ success: true, data, err, form: req.body });
-  } else {
-    if(err.code == 11000) {
-      res.json({ succsess: false, data, err: 'OPS!!! Pick another login, this one already exists', form: req.body });
+      await acl.save();
+
+      res.json({ success: true, data, err, form: req.body });
     } else {
-      res.json({ succsess: false, data, err: 'OPS!!! Some error has ocurred', form: req.body });
+      if(err.code == 11000) {
+        res.json({ succsess: false, data, err: 'OPS!!! Pick another login, this one already exists', form: req.body });
+      } else {
+        res.json({ succsess: false, data, err: 'OPS!!! Some error has ocurred', form: req.body });
+      }
     }
-  }
+  // }
+
 };
 
 exports.delete = async (req, res) => {
 
   const model = await Model.findOne({ _id: req.params.id });
+  // let access = await aclValidator.verify(req.decoded.aclModules, 'users');
 
-  if (model) {
-    model.active = false;
-    await model.save();
-    res.json({ success: true });
-  } else {
-    res.json({ success: false, err: 'An error has occured'});
-  }
+  // console.log(access);
+
+  // if(access > 2 || (access == 2 && model.client != req.decoded.client)) {
+  //   res.json({ success: false, err: 'Você nao pode deletar esse user'});
+  // } else {
+    if (model) {
+      model.active = false;
+      await model.save();
+      res.json({ success: true });
+    } else {
+      res.json({ success: false, err: 'Ocorreu algum erro'});
+    }
+  // }
 };
 
 exports.edit = async (req, res) => {

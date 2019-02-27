@@ -101,7 +101,8 @@
         for (let i = 0; i < this.list.length; i++) {
           const el = this.list[i];
           if (el.selected) {
-            await this.$http.delete(`/v1/users/${el._id}`);
+            let response = await this.$http.delete(`/v1/users/${el._id}`);
+            console.log(response);
           }
         }
         this.listAll();
