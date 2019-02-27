@@ -43,7 +43,7 @@
         </div>
       </div>
 
-      <div class="text-center">
+      <div class="text-center" v-aclValidator='{level: 2, module}'>
         <b-button type="button" variant="primary" @click="onSubmit" >Salvar</b-button>
         <router-link to="/users">
           <b-button type="reset" variant="danger"  >
@@ -63,6 +63,7 @@ export default {
   props:['id'],
   data() {
     return {
+      module:'users',
       clients: [],
       form:{
         _id: '',

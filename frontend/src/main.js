@@ -26,6 +26,7 @@ import './assets/custom.css';
 import './core/globalMixin';
 import './core/filter';
 import './core/mask';
+import './core/directive';
 
 library.add(fas);
 

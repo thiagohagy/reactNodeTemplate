@@ -1,6 +1,7 @@
 import ls from 'local-storage';
 import app from './../../main';
 import main from './../../main';
+import jwt_decode from 'jwt-decode';
 
 const state = {
   AUTH_TOKEN: ls('token'),
@@ -25,6 +26,7 @@ const getters = {
     return status;
   },
   authToken: () => state.AUTH_TOKEN,
+  decoded: () => jwt_decode(state.AUTH_TOKEN),
 };
 
 export default {

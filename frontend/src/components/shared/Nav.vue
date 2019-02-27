@@ -60,12 +60,12 @@
         <b-nav-item id="profileDropdown">
           <b-nav-item-dropdown class="nav-item" :text="decoded.name || decoded.login" right>
             <b-dropdown-item href="#">
-              <router-link :to="{ name: 'UsersForm', params:{ id: decoded._id } }" class="nav-link dropdown-nav-link">My profile</router-link>
+              <router-link :to="{ name: 'UsersForm', params:{ id: decoded._id } }" class="nav-link dropdown-nav-link">Meu perfil</router-link>
             </b-dropdown-item>
 
             <b-dropdown-item href="#" @click="logout()">
               <div class="nav-link dropdown-nav-link">
-                Logout
+                Sair
                 <font-awesome-icon icon="sign-out-alt" />
               </div>
             </b-dropdown-item>
@@ -122,8 +122,6 @@ export default {
         file += `&mimetype=${this.decoded.avatar.mimetype}`;
         file += `&filename=${this.decoded.avatar.filename}`;
         file += `&folder=${this.decoded.avatar.folder}`;
-
-        console.log(file);
         return file;
       } else {
         return '';

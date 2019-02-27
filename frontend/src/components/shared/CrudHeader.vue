@@ -7,12 +7,12 @@
             </button>
           </router-link>
           <button class="btn btn-danger btn-sm" @click="onDelete">
-            Delete
+            Deletar
           </button>
         </div>
         <div class="col">
           <b-input-group>
-            <b-form-input type="text" placeholder="Search for an user..." v-model="search"/>
+            <b-form-input type="text" placeholder="Buscar..." v-model="search"/>
             <b-input-group-append>
               <b-button variant="outline-secondary btn-sm" @click="onSearch()">
                 <font-awesome-icon icon="search" />

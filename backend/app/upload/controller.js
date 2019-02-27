@@ -30,11 +30,16 @@ exports.upload = (req, res) => {
 exports.getFile = async (req, res) => {
   res.setHeader('Content-Type', req.query.mimetype);
 
-  const pathImg = path.join(`${config.uploadPath}/${req.query.folder}`, req.query.filename);
-  const exist = await fs.existsSync(pathImg);
+  if(req.query.mimetype && req.query.filename) {
 
-  if (exist) {
-    fs.createReadStream(pathImg).pipe(res);
+    const pathImg = path.join(`${config.uploadPath}/${req.query.folder}`, req.query.filename);
+    const exist = await fs.existsSync(pathImg);
+
+    if (exist) {
+      fs.createReadStream(pathImg).pipe(res);
+    } else {
+      res.end();
+    }
   } else {
     res.end();
   }

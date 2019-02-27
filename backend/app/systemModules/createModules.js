@@ -16,12 +16,20 @@ mongoose.connect(config.database, {
         {
             name: 'Usuários',
             module: 'users',
-            justRoot: true
+            justRoot: false,
+            default: true,
         },
         {
             name: 'Clientes',
             module: 'clients',
-            justRoot: true
+            justRoot: true,
+            default: false,
+        },
+        {
+            name: 'Dashboard',
+            module: 'dashboard',
+            justRoot: false,
+            default: true,
         }
     ];
 

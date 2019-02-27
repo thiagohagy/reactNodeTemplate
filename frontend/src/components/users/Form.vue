@@ -1,12 +1,10 @@
 <template>
   <div class="container text-left" >
-
     <div class="text-center">
       <h3>{{ pageTitle }}</h3>
     </div>
 
     <form>
-
       <div class="row">
         <div class="col-9">
 
@@ -34,18 +32,19 @@
             <vue-dropzone
               ref="myVueDropzone"
               id="dropzone"
+              :destroyDropzone="false"
               :options="dropzoneOptions"
+              :useCustomSlot=true
               v-on:vdropzone-sending="getExtraUploadData"
               v-on:vdropzone-success="setAvatarData"
-              :useCustomSlot=true
              >
               <div class="dropzone-custom-content">
-                <h3 class="dropzone-custom-title">Drop a file here!</h3>
-                <div class="subtitle">...or click to select one</div>
+                <h3 class="dropzone-custom-title">Arraste uma foto aqui!</h3>
+                <div class="subtitle">...ou clique para selecionar</div>
               </div>
             </vue-dropzone>
           </b-form-group>
-          <b-alert show variant="info" v-if="form._id">Dont select to keep the same</b-alert>
+          <b-alert show variant="info" v-if="form._id">Deixe em branco para manter a mesma</b-alert>
         </div>
       </div>
 
@@ -71,13 +70,13 @@
 
       </div>
 
-      <b-alert show variant="info" v-if="form._id">Let it blank to keep the same password</b-alert>
+      <b-alert show variant="info" v-if="form._id">Deixe em branco para manter a mesma senha</b-alert>
 
-      <div class="text-center">
-        <b-button type="button" variant="primary" @click="onSubmit" >Submit</b-button>
+      <div class="text-center" v-aclValidator='{level: 2, module}'>
+        <b-button type="button" variant="primary" @click="onSubmit" >Enviar</b-button>
         <router-link to="/users">
           <b-button type="reset" variant="danger"  >
-            Cancel
+            Cancelar
           </b-button>
         </router-link>
       </div>
@@ -93,12 +92,13 @@ export default {
   props:['id'],
   data() {
     return {
+      module:'users',
       clients: [],
       form:{
-        email: 'teste@test.com',
-        login: 'teste',
-        name: 'teste',
-        password: 'teste',
+        email: '',
+        login: '',
+        name: '',
+        password: '',
         role: '',
         clientQuery: '',
         client: '',
@@ -108,11 +108,11 @@ export default {
           folder: '',
         },
       },
-      pageTitle: 'User registration',
+      pageTitle: 'Cadastro de usuário',
       roles: [
         { value: '', text: '--selecione--' },
         { value: 'admin', text: 'Admin' },
-        { value: 'basic', text: 'Basic' },
+        { value: 'basic', text: 'Basico' },
       ],
       dropzoneOptions: this.$http.getDropzoneConfig(
         {
@@ -125,7 +125,7 @@ export default {
           maxFilesize: 2,
           autoProcessQueue: true,
           maxFiles: 1,
-          dictDefaultMessage: 'UPLOAD ME',
+          dictDefaultMessage: 'Enviar',
         },
       ),
     };
@@ -146,13 +146,13 @@ export default {
           const response = await this.$http.put('v1/users', this.form); // request with async await
 
           if (response.success) {
-            this.$toasted.show('User edited with success', { icon: 'check', type: 'success' });
+            this.$toasted.show('Usuario editado com sucesso', { icon: 'check', type: 'success' });
             this.$router.push({ name: 'Users' });
           } else {
             this.$toasted.show(response.err, { icon: 'times', type: 'error' });
           }
         } else {
-          this.$toasted.show('Inform  email, role, client, login and password. Password and passord confirm must be equals', { icon: 'times', type: 'error' });
+          this.$toasted.show('Informe o email, tipo, cliente, login e senha. A senha e a confirmação tem que ser iguais', { icon: 'times', type: 'error' });
         }
       } else if (
         this.form.client &&
@@ -164,13 +164,13 @@ export default {
         const response = await this.$http.post('v1/users', this.form); // request with async await
 
         if (response.success) {
-          this.$toasted.show('Registrarion completed with success', { icon: 'check', type: 'success' });
+          this.$toasted.show('Cadastro concluido com sucesso', { icon: 'check', type: 'success' });
           this.$router.push({ name: 'Users' });
         } else {
           this.$toasted.show(response.err, { icon: 'times', type: 'error' });
         }
       } else {
-        this.$toasted.show('Inform  email, role, client, login and password. Password and passord confirm must be equals', { icon: 'times', type: 'error' });
+        this.$toasted.show('Informe o email, tipo, cliente, login e senha. A senha e a confirmação tem que ser iguais', { icon: 'times', type: 'error' });
       }
     },
     async getClients(search) {
@@ -186,9 +186,15 @@ export default {
         delete response.password;
         this.form = response;
       } else {
-        this.$toasted.show('An error has ocurred', { icon: 'times', type: 'error' });
+        this.$toasted.show('OPS!!! Ocorreu um erro', { icon: 'times', type: 'error' });
       }
     }
+
+    let decoded = this.$store.getters.decoded;
+    if(decoded.role == 'root') {
+      this.roles.push({ value: 'root', text: 'Root' });
+    }
+
     this.getClients();
   },
   components: {

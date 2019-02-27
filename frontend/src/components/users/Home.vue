@@ -2,6 +2,7 @@
   <div class="container text-left" >
 
     <my-crud-header
+      v-aclValidator='{level: 2, module}'
       addRoute='UsersForm'
       @onDelete='deleteSelected'
       @onSearch='search = $event.search; listAll()'
@@ -15,22 +16,24 @@
           <table class="table table-striped">
             <thead class="thead-dark">
               <tr>
-                <th scope="col"><b-form-checkbox
+                <th
+                    v-aclValidator='{level: 2, module}'
+                    scope="col"><b-form-checkbox
                     v-model="selectAllStatus"
                     @change='selectAll()'
                   >
                   </b-form-checkbox>
                   </th>
-                <th scope="col">Client</th>
+                <th scope="col">Cliente</th>
                 <th scope="col">Login</th>
                 <th scope="col">Email</th>
-                <th scope="col">Role</th>
-                <th scope="col">Option</th>
+                <th scope="col">Tipo</th>
+                <th scope="col" v-aclValidator='{level: 2, module}' >Opções</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for='item in list' :key="item._id">
-                <td>
+                <td v-aclValidator='{level: 2, module}'>
                   <b-form-checkbox
                     v-model="item.selected"
                   >
@@ -44,7 +47,7 @@
                 <td>{{item.login}}</td>
                 <td>{{item.email}}</td>
                 <td>{{item.role}}</td>
-                <td>
+                <td v-aclValidator='{level: 2, module}'>
                   <b-button variant="outline-secondary btn-sm">
                     <router-link :to="{name: 'UsersAcl', params: {id: item._id }}">
                       ACL
@@ -52,7 +55,7 @@
                   </b-button>
                   <b-button variant="outline-secondary btn-sm">
                     <router-link :to="{name: 'UsersForm', params: {id: item._id }}">
-                      Edit
+                      Editar
                     </router-link>
                   </b-button>
                 </td>
@@ -79,6 +82,7 @@
   export default {
     data () {
       return {
+        module: 'users',
         list: [],
         totalItens: 0,
         selectAllStatus: false,

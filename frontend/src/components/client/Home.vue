@@ -2,6 +2,7 @@
   <div class="container text-left" >
 
     <my-crud-header
+      v-aclValidator='{level: 2, module}'
       addRoute='ClientsForm'
       @onDelete='deleteSelected'
       @onSearch='search = $event.search; listAll()'
@@ -15,29 +16,29 @@
           <table class="table table-striped">
             <thead class="thead-dark">
               <tr>
-                <th scope="col"><b-form-checkbox
-                    v-model="selectAllStatus"
-                    @change='selectAll()'
-                  >
-                  </b-form-checkbox>
-                  </th>
-                <th scope="col">Name</th>
-                <th scope="col">Option</th>
+                <th v-aclValidator='{level: 2, module}'>
+                  <b-form-checkbox
+                  v-model="selectAllStatus"
+                  @change='selectAll()'
+                  ></b-form-checkbox>
+                </th>
+                <th>Nome</th>
+                <th v-aclValidator='{level: 2, module}'>Opções</th>
               </tr>
             </thead>
             <tbody>
               <tr v-for='item in list' :key="item._id">
-                <td>
+                <td v-aclValidator='{level: 2, module}'>
                   <b-form-checkbox
                     v-model="item.selected"
                   >
                   </b-form-checkbox>
                 </td>
                 <td>{{item.name}}</td>
-                <td>
+                <td v-aclValidator='{level: 2, module}'>
                   <b-button variant="outline-secondary btn-sm">
                     <router-link :to="{name: 'ClientsForm', params: {id: item._id }}">
-                      Edit
+                      Editar
                     </router-link>
                   </b-button>
                 </td>
@@ -62,6 +63,7 @@
   export default {
     data () {
       return {
+        module: 'clients',
         list: [],
         totalItens: 0,
         selectAllStatus: false,

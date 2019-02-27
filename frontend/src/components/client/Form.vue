@@ -9,17 +9,17 @@
 
       <div class="row">
         <div class="col-12">
-          <b-form-group id="nameLabel" label="Client name:" label-for="name" >
-            <b-form-input id="name" type="text" v-model="form.name"  placeholder="Name please"></b-form-input>
+          <b-form-group id="nameLabel" label="Nome:" label-for="name" >
+            <b-form-input id="name" type="text" v-model="form.name"  placeholder="Nome do cliente"></b-form-input>
           </b-form-group>
         </div>
       </div>
 
-      <div class="text-center">
-        <b-button type="button" variant="primary" @click="onSubmit" >Submit</b-button>
+      <div class="text-center" v-aclValidator='{level: 2, module}'>
+        <b-button type="button" variant="primary" @click="onSubmit" >Enviar</b-button>
         <router-link to="/clients">
           <b-button type="reset" variant="danger"  >
-            Cancel
+            Cancelar
           </b-button>
         </router-link>
       </div>
@@ -34,10 +34,11 @@
     props:['id'],
     data() {
       return {
+        module:'clients',
         form:{
-          name: 'teste',
+          name: '',
         },
-        pageTitle: 'Client registration',
+        pageTitle: 'Cadastro de clientes',
       }
     },
     methods: {
