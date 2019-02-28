@@ -19,8 +19,7 @@ VueBase is a Boilerplate for vuejs, a quick way to create administrative systems
 * Http with axios
 * VueRouter for route manage
 * Typeahead on users form
-
-login: _admin_, password: _admin_
+* Dynamic menu with access validation on links
 
 # SETUP
 
@@ -40,11 +39,21 @@ npm install
 npm run serve
 ```
 
-## Go to:
+## Initialization:
 
-http://localhost:9090/api/fixture/usuario/1
+```
+    Go to your project folder /backend/app/systemMOdules and execute "node createModules.js"
+    This will create the defaults modules in your db
+```
+then...
 
-### this is just to create admin user, login: admin, pass: admin
+```
+    Go to your project folder /backend/app/usuarios/fixture and execute "node createRoot.js"
+    This will create the root user in your db
+```
+
+
+### this is just to create admin user, login: root, pass: 123
 
 ## Access
 

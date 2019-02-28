@@ -25,9 +25,6 @@ mongoose.connect(
     useMongoClient: true
   }
 );
-/*Seed - rota para cadastrar o admin no banco*/
-app.use('/api/fixture', require('./app/usuario/fixture'));
-
 
 /*Login de Usuarios*/
 app.use('/api/', require('./app/usuario/auth'));

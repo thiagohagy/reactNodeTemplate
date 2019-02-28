@@ -45,5 +45,4 @@ mongoose.connect(config.database, {
         }
     }
 
-
 })();
