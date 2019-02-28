@@ -42,7 +42,9 @@ npm run serve
 ## Initialization:
 
 ```
-    Go to your project folder /backend/app/systemMOdules and execute "node createModules.js"
+    Go to your project folder...
+    First change you dbName on /backend/config.js
+    Go to /backend/app/systemMOdules and execute "node createModules.js"
     This will create the defaults modules in your db
 ```
 then...
@@ -51,7 +53,11 @@ then...
     Go to your project folder /backend/app/usuarios/fixture and execute "node createRoot.js"
     This will create the root user in your db
 ```
+at last...
 
+```
+change the "uploadPath" on backend/config.js to you correspondent path
+```
 
 ### this is just to create admin user, login: root, pass: 123
 
