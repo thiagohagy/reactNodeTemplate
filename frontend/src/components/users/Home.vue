@@ -2,7 +2,8 @@
   <div class="container text-left" >
 
     <my-crud-header
-      v-aclValidator='{level: 2, module}'
+      :module='module'
+      :level='2'
       addRoute='UsersForm'
       @onDelete='deleteSelected'
       @onSearch='search = $event.search; listAll()'
@@ -16,19 +17,17 @@
           <table class="table table-striped">
             <thead class="thead-dark">
               <tr>
-                <th
-                    v-aclValidator='{level: 2, module}'
-                    scope="col"><b-form-checkbox
+                <th v-aclValidator='{level: 2, module}'><b-form-checkbox
                     v-model="selectAllStatus"
                     @change='selectAll()'
                   >
                   </b-form-checkbox>
                   </th>
-                <th scope="col">Cliente</th>
-                <th scope="col">Login</th>
-                <th scope="col">Email</th>
-                <th scope="col">Tipo</th>
-                <th scope="col" v-aclValidator='{level: 2, module}' >Opções</th>
+                <th>Cliente</th>
+                <th>Login</th>
+                <th>Email</th>
+                <th>Tipo</th>
+                <th v-aclValidator='{level: 2, module}' >Opções</th>
               </tr>
             </thead>
             <tbody>

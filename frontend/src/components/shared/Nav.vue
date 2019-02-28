@@ -21,9 +21,9 @@
         <b-nav-item
         href="#"
         class="nav-item"
-        v-for="link in links"
         :key='link.name'
-        v-if='!link.children && link.meta.showOnNav'>
+        v-aclValidator='{ level: link.meta.aclLevel, module: link.meta.module }'
+        v-for="link in filterLinks(links, 'simple')">
           <router-link :to="{ name: link.name }" class="nav-link">{{link.meta.humanName}}</router-link>
         </b-nav-item>
       </b-navbar-nav>
@@ -33,15 +33,15 @@
         <b-nav-item-dropdown
           class="nav-item"
           :text="link.meta.humanName"
-          v-for="link in links"
           :key='link.name'
-          v-if='link.children && link.meta.showOnNav'
+          v-aclValidator='{ level: link.meta.aclLevel, module: link.meta.module }'
+          v-for="link in filterLinks(links, 'nested')"
         >
           <b-dropdown-item
             href="#"
-            v-for="sublink in link.children"
-            v-if='sublink.meta.showOnNav'
             :key='sublink.name'
+            v-aclValidator='{ level: sublink.meta.aclLevel, module: sublink.meta.module }'
+            v-for="sublink in filterLinks(link.children, 'sublink')"
           >
             <router-link :to="{ name: sublink.name }" class="nav-link dropdown-nav-link">{{sublink.meta.humanName}}</router-link>
           </b-dropdown-item>
@@ -54,7 +54,6 @@
           <b-button size="sm" class="my-2 my-sm-0" type="submit">Search</b-button>
         </b-nav-form>
       -->
-
 
       <b-navbar-nav class="ml-auto ">
         <b-nav-item id="profileDropdown">
@@ -126,7 +125,25 @@ export default {
       } else {
         return '';
       }
-    }
+    },
+    filterLinks(links, tipo) {
+      let newLinks = [];
+
+      for (let i = 0; i < links.length; i++) {
+        const link = links[i];
+
+        if ( tipo == 'sublink' && link.meta.showOnNav) {
+          newLinks.push(link);
+        } else if ( tipo == 'simple' && (!link.children && link.meta.showOnNav)) {
+          newLinks.push(link);
+        } else if ( tipo == 'nested' && (link.children && link.meta.showOnNav)) {
+          newLinks.push(link);
+        }
+
+      }
+
+      return newLinks;
+    },
   },
   computed: {
     isLogged() {

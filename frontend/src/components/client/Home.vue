@@ -2,8 +2,9 @@
   <div class="container text-left" >
 
     <my-crud-header
-      v-aclValidator='{level: 2, module}'
       addRoute='ClientsForm'
+      :module='module'
+      :level='2'
       @onDelete='deleteSelected'
       @onSearch='search = $event.search; listAll()'
     >

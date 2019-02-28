@@ -15,7 +15,7 @@ Vue.filter('time', (value) => {
 });
 
 Vue.filter('money',  (value) => {
-  return value ? value.toLocaleString('pt-br', {style: 'currency', currency: 'BRL' }) : 'R$0,00';
+  return value ? value.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' }) : 'R$0,00';
 });
 
 Vue.filter('phone', (value) => {
@@ -33,6 +33,6 @@ Vue.filter('phone', (value) => {
 
 Vue.filter('cpfcnpj',  (value) => {
   if (value) {
-    return value.toString().replace(/\D/g, '').replace(/^(\d{2})(\d{3})?(\d{3})?(\d{4})?(\d{2})?/, "$1 $2 $3/$4-$5");
+    return value.toString().replace(/\D/g, '').replace(/^(\d{2})(\d{3})?(\d{3})?(\d{4})?(\d{2})?/, '$1 $2 $3/$4-$5');
   }
 });

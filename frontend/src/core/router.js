@@ -47,7 +47,7 @@ const router = new Router({
     {
       path: '/users',
       component: {
-        render(c) { return c('router-view') } /// then I dont need a parent component file
+        render(c) { return c('router-view'); }, // then I dont need a parent component file
       },
       meta: {
         humanName: 'Usuários',
@@ -99,7 +99,7 @@ const router = new Router({
     {
       path: '/clients',
       component: {
-        render(c) { return c('router-view') } /// then I dont need a parent component file
+        render(c) { return c('router-view'); }, // then I dont need a parent component file
       },
       meta: {
         humanName: 'Clientes',
