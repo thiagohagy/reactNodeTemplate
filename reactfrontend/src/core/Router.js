@@ -13,6 +13,8 @@ import Dash from './../components/dashboard/Dash';
 import UsersHome from './../components/users/Home';
 import ClientsHome from './../components/clients/Home';
 import Login from './../components/auth/Login';
+import Register from './../components/auth/Register';
+import MainScreen from '../components/ui/MainScreen';
 
 function PrivateRoute({ children, ...rest }) {
 
@@ -22,16 +24,32 @@ function PrivateRoute({ children, ...rest }) {
     <Route
       {...rest}
       render={({ location }) =>
-        isAuth ? (
-          children
+      {
+        // put here your non private urls
+        let goTo = '/login';
+        switch (location.pathname) {
+          case '/register':
+            goTo = location.pathname
+            break;
+          default:
+            break;
+        }
+
+        console.log(goTo);
+        
+        return isAuth ? (
+          <MainScreen >
+            { children }
+          </MainScreen>
         ) : (
           <Redirect
             to={{
-              pathname: "/login",
+              pathname: goTo ,
               state: { from: location }
             }}
           />
         )
+      }
       }
     />
   );
@@ -42,10 +60,11 @@ export const Router = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <PrivateRoute path='/' exact > <Dash/> </PrivateRoute>
+        <Route path='/login' component={Login}/>
+        <Route path='/register' component={Register}/>
+        <PrivateRoute path='/'> <Dash/> </PrivateRoute>
         <PrivateRoute path='/users' > <UsersHome/> </PrivateRoute>
         <PrivateRoute path='/clients' > <ClientsHome/> </PrivateRoute>
-        <Route path='/login' component={Login}/>
       </Switch>
     </BrowserRouter>
   )
