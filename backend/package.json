@@ -14,7 +14,7 @@
     "iconv-lite": "^0.4.23",
     "jsonwebtoken": "^5.4.0",
     "lodash": "^4.17.11",
-    "moment": "^2.10.6",
+    "moment": "^2.29.4",
     "mongoose": "^4.1.9",
     "mongoose-auto-increment": "^5.0.1",
     "mongoose-auto-increment-fix": "^5.0.2",
