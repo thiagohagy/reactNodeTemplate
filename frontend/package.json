@@ -16,7 +16,7 @@
     "jwt-decode": "^2.2.0",
     "local-storage": "^1.4.2",
     "material-design-icons": "^3.0.1",
-    "moment": "^2.22.2",
+    "moment": "^2.29.4",
     "nprogress": "^0.2.0",
     "vue": "^2.5.17",
     "vue-bootstrap-typeahead": "^0.2.6",
