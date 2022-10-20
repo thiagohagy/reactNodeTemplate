@@ -15,7 +15,7 @@
     "jsonwebtoken": "^5.4.0",
     "lodash": "^4.17.11",
     "moment": "^2.10.6",
-    "mongoose": "^4.1.9",
+    "mongoose": "^4.13.21",
     "mongoose-auto-increment": "^5.0.1",
     "mongoose-auto-increment-fix": "^5.0.2",
     "mongoose-deep-populate": "^2.0.3",
